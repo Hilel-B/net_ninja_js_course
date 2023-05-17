@@ -4,6 +4,8 @@ const card = document.querySelector(".card");
 const time = document.querySelector("img.time");
 const icon = document.querySelector(".icon img");
 
+
+
 const updateDetails = (data) => {
 
   const {
@@ -36,6 +38,14 @@ const updateCity = async (city) => {
   };
 };
 
+if(localStorage.getItem('city')){
+  updateCity(localStorage.getItem('city'))
+    .then((data) => {
+      updateDetails(data);
+    })
+    .catch((err) => console.log(err));
+};
+
 cityForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
@@ -45,6 +55,7 @@ cityForm.addEventListener("submit", (e) => {
   updateCity(city)
     .then((data) => {
       updateDetails(data);
+      localStorage.setItem('city', city);
     })
     .catch((err) => console.log(err));
 });
